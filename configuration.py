@@ -9,6 +9,9 @@ configuration of lizards in a 8x8 board.
 """
 
 import os
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import colors
 
 class Configuration(object):
   """Class that represents a candidate configuration. Attributes are:
@@ -133,6 +136,23 @@ class Configuration(object):
     for i in range(8):
       self.attacked[i] = self.isLizardAttacked(i)
     self.energy = self.attacked.count(True)
+    
+    
+  def plot(self):
+    data = np.zeros(shape=(8,8))
+    for liz in self.lizardPositions:
+      data[liz[0]][liz[1]] = 2
+    for tree in self.treePositions:
+      data[tree[0]][tree[1]] = 1
+    cmap = colors.ListedColormap(['white', 'green', 'red'])
+    fig, ax = plt.subplots(figsize=(10,10))
+    ax.pcolor(data, cmap=cmap, edgecolors='k', linewidths=2)
+    ax.axes.get_xaxis().set_visible(False)
+    ax.axes.get_yaxis().set_visible(False)
+    plt.gca().invert_yaxis()
+    for axis in ['top','bottom','left','right']:
+      ax.spines[axis].set_linewidth(2.5)
+    plt.show()
   
   
   def __str__(self):
