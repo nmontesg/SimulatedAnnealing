@@ -15,9 +15,10 @@ from matplotlib import colors
 
 class Configuration(object):
   """Class that represents a candidate configuration. Attributes are:
-    - List of lizard positions.
-    - List of trees positions.
-    - Energy of the configuration, as in number of attacks."""
+    - List of lizard positions. Initialized to empty list.
+    - List of trees positions. Initialized from input, if any.
+    - List of attacked lizards. All are initialized as NOT being attacked (False).
+    - Energy of the configuration, initialized to 0."""
   def __init__(self, treeList=[]):
     self.lizardPositions = []    
     if isinstance(treeList, list):
@@ -29,9 +30,11 @@ class Configuration(object):
   
   
   def randomLizards(self):
-    """Choose 8 different random positions for lizards."""
+    """Choose 8 different random and different positions for lizards, i.e. 8
+    tuples of integers between 0 and 7. They must not coincide between them nor 
+    with tree positions."""
     i = 0
-    while(i<8):
+    while i<8:
       newLizard = (int(os.urandom(1)[0]/255*8 - 1.E-9),
                    int(os.urandom(1)[0]/255*8 - 1.E-9))
       if (newLizard not in self.lizardPositions) and (newLizard not in self.treePositions):
@@ -139,6 +142,7 @@ class Configuration(object):
     
     
   def plot(self):
+    """Produce an image diagram of the board."""
     data = np.zeros(shape=(8,8))
     for liz in self.lizardPositions:
       data[liz[0]][liz[1]] = 2
