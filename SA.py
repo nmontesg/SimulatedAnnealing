@@ -19,7 +19,7 @@ plt.rcParams.update({'font.size': 22})
 
 
 """Parameters related to the SA algorithm"""
-Lmax = 100 # maximum number of total inner loop iterations
+Lmax = 100 # maximum number of total outer loop iterations
 Lamax = 10 # maximum number of accepted inner loop iterations
 HTsw = 0.99 # minumum acceptance rate at starting temperature
 Tini = 1.00 # initial temperature
