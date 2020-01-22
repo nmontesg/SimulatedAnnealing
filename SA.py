@@ -15,7 +15,7 @@ import copy
 import math
 import numpy as np
 import matplotlib.pyplot as plt
-plt.rcParams.update({'font.size': 22})
+plt.rcParams.update({'font.size': 32})
 
 
 """Parameters related to the SA algorithm"""
@@ -142,7 +142,7 @@ def SimulatedAnnealing(treeList = [], cooling='geometric'):
   else:
     raise ValueError('Invalid cooling schedule.')
     
-  print('Final temperature: ' + str(temp))
+  print('Final temperature: ' + str(temp) + '\n')
   return (candidate, iterList, lizUnderAttack, tempList, outerIter)
   
 #%%
@@ -154,7 +154,7 @@ treeList2 = [(3,4), (5,5)]
 treeList3 = [(1,1), (4,6), (5,3)]
 
 # tweak treeList argument to try a different tree setup
-solution = SimulatedAnnealing(treeList = treeList0, cooling = 'geometric')
+solution = SimulatedAnnealing(treeList = treeList0, cooling = 'logarithmic')
 solconfig = solution[0]
 solconfig.plot()
 iterList = solution[1]
@@ -167,13 +167,13 @@ coolingSchedule.plotResults(iterList, lizUnderAttack, tempList)
 #%%
 """Find the average number of outer loops iterations necessary for many configurations."""
 N = 100
-listOfTreeLists = [treeList0, treeList1, treeList2, treeList3]
+listOfTreeLists = [treeList0]#, treeList1, treeList2, treeList3]
 
 for setup in listOfTreeLists:
   s = 0.
   for _ in range(N):
-    solution = SimulatedAnnealing(treeList = setup, cooling = 'geometric')
+    solution = SimulatedAnnealing(treeList = setup, cooling = 'logarithmic')
     s += solution[4]
   avg = s/N
-  print('Configuration ' + str(listOfTreeLists.index(setup)) + ': average iterations: ' + str(avg)) 
+  print('\nConfiguration ' + str(listOfTreeLists.index(setup)) + ': average iterations: ' + str(avg) + '\n') 
 #%%
