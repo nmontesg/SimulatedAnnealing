@@ -19,7 +19,7 @@ plt.rcParams.update({'font.size': 32})
 
 
 """Parameters related to the SA algorithm"""
-Lmax = 100 # maximum number of total outer loop iterations
+Lmax = 100 # maximum number of total inner loop iterations
 Lamax = 10 # maximum number of accepted inner loop iterations
 HTsw = 0.99 # minumum acceptance rate at starting temperature
 Tini = 1.00 # initial temperature
@@ -86,8 +86,7 @@ def SimulatedAnnealing(treeList = [], cooling='geometric'):
   Start by creating an initial configuration with random lizard positions.
   The tree positions is taken from input. The cooling argument specifies the
   cooling schedule (geometric by default). The algorithm is only allowed to 
-  halt once a solution has been found or the outer loop has exceeded a maximum
-  number of iterations."""
+  halt once a solution has been found."""
   if not isinstance(treeList, list):
     raise ValueError('Argument treeList is not a list.')
   initialConf = configuration.Configuration(treeList = treeList)
@@ -109,7 +108,7 @@ def SimulatedAnnealing(treeList = [], cooling='geometric'):
   tempList = [temp]
   candidate = initialConf
   outerIter = 1
-  while (candidate.energy > 0) and (outerIter <= Lmax):
+  while (candidate.energy > 0):
     candidate = InnerLoop(candidate, temp)[0]
     print('Iteration ' + str(outerIter))
     print('Temperature: ' + str(temp))
@@ -154,26 +153,11 @@ treeList2 = [(3,4), (5,5)]
 treeList3 = [(1,1), (4,6), (5,3)]
 
 # tweak treeList argument to try a different tree setup
-solution = SimulatedAnnealing(treeList = treeList0, cooling = 'logarithmic')
+solution = SimulatedAnnealing(treeList = treeList0, cooling = 'geometric')
 solconfig = solution[0]
 solconfig.plot()
 iterList = solution[1]
 lizUnderAttack = solution[2]
 tempList = solution[3]
 coolingSchedule.plotResults(iterList, lizUnderAttack, tempList)
-#%%
-
-
-#%%
-"""Find the average number of outer loops iterations necessary for many configurations."""
-N = 100
-listOfTreeLists = [treeList0]#, treeList1, treeList2, treeList3]
-
-for setup in listOfTreeLists:
-  s = 0.
-  for _ in range(N):
-    solution = SimulatedAnnealing(treeList = setup, cooling = 'logarithmic')
-    s += solution[4]
-  avg = s/N
-  print('\nConfiguration ' + str(listOfTreeLists.index(setup)) + ': average iterations: ' + str(avg) + '\n') 
 #%%

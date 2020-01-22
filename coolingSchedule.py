@@ -48,5 +48,4 @@ def plotResults(iterList, lizardsUnderAttack, tempList):
   ax2.plot(iterList, tempList, linestyle = '-', linewidth = 2.5,
            marker = 'o', markersize = 8, color=color)
   ax2.tick_params(axis='y', labelcolor=color)
-  plt.savefig('kB_E-4.eps', format='eps')
   plt.show()

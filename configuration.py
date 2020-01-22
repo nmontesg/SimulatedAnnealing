@@ -31,7 +31,7 @@ class Configuration(object):
   
   def randomLizards(self):
     """Choose 8 different random and different positions for lizards, i.e. 8
-    tuples of integers between 0 and 7. They must not coincide between them nor 
+    tuples of two integers between 0 and 7. They must not coincide between them nor 
     with tree positions."""
     i = 0
     while i<8:
