@@ -153,7 +153,7 @@ treeList2 = [(3,4), (5,5)]
 treeList3 = [(1,1), (4,6), (5,3)]
 
 # tweak treeList argument to try a different tree setup
-solution = SimulatedAnnealing(treeList = treeList0, cooling = 'geometric')
+solution = SimulatedAnnealing(treeList = treeList3, cooling = 'geometric')
 solconfig = solution[0]
 solconfig.plot()
 iterList = solution[1]
